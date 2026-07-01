@@ -35,11 +35,11 @@ int main() {
     fftw_complex* lap_hat  = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * tamano);
     fftw_complex* lap_real = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * tamano);
 
-    // Planes de ejecucion FFTW
+    // Planes de ejecución FFTW
     fftw_plan plan_directo = fftw_plan_dft_2d(Nx, Ny, u_real, u_hat, FFTW_FORWARD, FFTW_MEASURE);
     fftw_plan plan_inverso = fftw_plan_dft_2d(Nx, Ny, lap_hat, lap_real, FFTW_BACKWARD, FFTW_MEASURE);
 
-    // Definicion del espacio de frecuencias (k-space)
+    // Definición del espacio de frecuencias (k-space)
     std::vector<double> kx(Nx), ky(Ny);
     for (int i = 0; i < Nx; i++) {
         kx[i] = (i < Nx / 2) ? i * (2.0 * M_PI / dx) : (i - Nx) * (2.0 * M_PI / dx);
@@ -48,7 +48,7 @@ int main() {
         ky[j] = (j < Ny / 2) ? j * (2.0 * M_PI / dy) : (j - Ny) * (2.0 * M_PI / dy);
     }
 
-    // Identificacion de nodos de frontera para sensores
+    // Identificación de nodos de frontera para sensores
     std::vector<int> idx_sensores;
     for (int j = 0; j < Ny; j++) {
         idx_sensores.push_back(0 * Ny + j);
@@ -61,7 +61,7 @@ int main() {
     int num_sensores = idx_sensores.size();
     std::vector<std::vector<double>> grabacion_paredes(num_sensores, std::vector<double>(Nt, 0.0));
 
-    // Evolucion hacia el futuro
+    // Evolución hacia el futuro
     std::cout << "Ejecutando simulacion directa..." << std::endl;
 
     for (int n = 0; n < Nt - 1; n++) {
@@ -106,7 +106,7 @@ int main() {
         }
     }
 
-    // Reversion temporal hacia el pasado
+    // Reversión temporal hacia el pasado
     std::cout << "Ejecutando inversion temporal..." << std::endl;
 
     #pragma omp parallel for schedule(static)
