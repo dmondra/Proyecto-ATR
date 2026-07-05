@@ -108,7 +108,7 @@ void ejecutar_solver_atr_optimizado(int Nx, int Ny, int Nt, double dx, double dy
             archivo_binario2.write(reinterpret_cast<char*>(u_presente), sizeof(double) * tamano);
         }
         for (int s = 0; s < sala.num_sensores; s++) {
-            u_presente[sala.idx_sensores[s]] = grabacion_paredes[s][n];
+            u_presente[sala.idx_sensores[s]] += grabacion_paredes[s][n];
         }
         #pragma omp parallel for schedule(static)
         for (int k = 0; k < tamano; k++) {
