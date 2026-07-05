@@ -30,7 +30,7 @@ EstructuraHabitacion construir_malla_perimetral(int Nx, int Ny, double dx, doubl
 }
 // Modulo del motor de calculo por fourier
 void ejecutar_solver_atr_optimizado(int Nx, int Ny, int Nt, double dx, double dy, double v, EstructuraHabitacion sala) {
-    std::ofstream archivo_binario("viaje_sonido.bin", std::ios::binary);
+    std::ofstream archivo_binario("viaje_sonido.bin", std::ios::binary); //Archivo binario para la animación del sonido
     const int tamano = Nx * Ny;
     const double termino_espacial = std::sqrt((1.0 / (sala.hx * sala.hx)) + (1.0 / (sala.hy * sala.hy)));
     const double dt = (2.0 / (M_PI * v * termino_espacial)) * 0.9; 
@@ -55,7 +55,7 @@ void ejecutar_solver_atr_optimizado(int Nx, int Ny, int Nt, double dx, double dy
     for (int n = 0; n < Nt - 1; n++) {
         if (n == 0) u_presente[(Nx / 2) * Ny + (Ny / 2)] = 10.0;
         if (n % 5 == 0) {
-            archivo_binario.write(reinterpret_cast<char*>(u_presente), sizeof(double) * tamano);
+            archivo_binario.write(reinterpret_cast<char*>(u_presente), sizeof(double) * tamano); //Se escribe el estado de la habitación cada múltiplo de 5, lo cual representa cada "frame"
         }
         #pragma omp parallel for schedule(static)
         for (int k = 0; k < tamano; k++) {
@@ -88,7 +88,7 @@ void ejecutar_solver_atr_optimizado(int Nx, int Ny, int Nt, double dx, double dy
         }
     }
     archivo_binario.close();
-    std::ofstream archivo1("prueba.csv");
+    std::ofstream archivo1("prueba.csv"); //Estado de la habitación antes de generar la regresión temporal
     for (int i = 0; i < Nx; i++) {
         for (int j = 0; j < Ny; j++) {
             archivo1 << u_presente[i * Ny + j] << (j == Ny - 1 ? "" : ",");
@@ -96,7 +96,7 @@ void ejecutar_solver_atr_optimizado(int Nx, int Ny, int Nt, double dx, double dy
         archivo1 << "\n";
     }
     archivo1.close();
-    std::ofstream archivo_binario2("inversion_temporal.bin", std::ios::binary);
+    std::ofstream archivo_binario2("inversion_temporal.bin", std::ios::binary); //Archivo binario para la animación de la regresión temporal
     std::cout << "Iniciando inversion temporal..." << std::endl;
     #pragma omp parallel for schedule(static)
     for (int k = 0; k < tamano; k++) {
@@ -138,7 +138,7 @@ void ejecutar_solver_atr_optimizado(int Nx, int Ny, int Nt, double dx, double dy
         }
     }
    archivo_binario2.close();
-    std::ofstream archivo("resultado_forense.csv");
+    std::ofstream archivo("resultado_forense.csv"); //Estado Final de la regresión temporal
     for (int i = 0; i < Nx; i++) {
         for (int j = 0; j < Ny; j++) {
             archivo << u_presente[i * Ny + j] << (j == Ny - 1 ? "" : ",");
