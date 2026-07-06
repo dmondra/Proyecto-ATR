@@ -1,13 +1,13 @@
 # Reconstrucción de Escenas mediante Reversión Temporal Acústica (ATR)
 
-**Autores:** Gabriel Briceño, Fiorella Calvo, Rolando Saborío, David Mondragón[cite: 1]
+**Autores:** Gabriel Briceño, Fiorella Calvo, Rolando Saborío, David Mondragón
 
 ---
 
 ## 📌 Justificación
-Tradicionalmente, las ciencias naturales utilizan el estado presente de un sistema para predecir su evolución futura[cite: 1]. Sin embargo, en la investigación forense y la acústica aplicada, surge el reto del **Problema Inverso**: utilizar datos capturados en el presente para deducir con exactitud el origen de un evento[cite: 1]. 
+Tradicionalmente, las ciencias naturales utilizan el estado presente de un sistema para predecir su evolución futura. Sin embargo, en la investigación forense y la acústica aplicada, surge el reto del **Problema Inverso**: utilizar datos capturados en el presente para deducir con exactitud el origen de un evento. 
 
-Esta propuesta plantea invertir la "flecha del tiempo" mediante la técnica de **Reversión Temporal Acústica (ATR)**[cite: 1]. Al explotar la simetría temporal de la ecuación de onda, el software propuesto procesará señales acústicas grabadas para retroceder numéricamente hasta el instante inicial[cite: 1]. El objetivo es transformar el ruido capturado por sensores en una herramienta de deducción científica capaz de localizar fuentes sonoras y reconstruir escenas con una precisión superior a los métodos convencionales[cite: 1].
+Esta propuesta plantea invertir la "flecha del tiempo" mediante la técnica de **Reversión Temporal Acústica (ATR)**. Al explotar la simetría temporal de la ecuación de onda, el software propuesto procesará señales acústicas grabadas para retroceder numéricamente hasta el instante inicial. El objetivo es transformar el ruido capturado por sensores en una herramienta de deducción científica capaz de localizar fuentes sonoras y reconstruir escenas con una precisión superior a los métodos convencionales.
 
 ---
 
