@@ -195,7 +195,6 @@ def animar_reconstruccion():
             else:
                 heatmap.set_clim(min_actual, max_actual)
             return [heatmap]
-        
         print("Creando animación animada...")
         ani = FuncAnimation(fig, actualizar, frames=len(frames), interval=50)
         nombre_salida = 'inversion_temporal.mp4'
