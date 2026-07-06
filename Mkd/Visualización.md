@@ -27,4 +27,4 @@ La parte del código en la que puede provocarse una falla en la simulación vien
 
 ```cpp
  const double termino_espacial = std::sqrt((1.0 / (sala.hx * sala.hx)) + (1.0 / (sala.hy * sala.hy)));
-const double dt = (2.0 / (M_PI * v * termino_espacial))*0.9; 
+const double dt = (2.0 / (M_PI * v * termino_espacial))*02.0; 
