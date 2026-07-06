@@ -2,7 +2,7 @@
 
 El archivo `malla_alternativa.cpp` comienza definiendo una clase que permite encapsular tanto los datos como la lógica necesaria para construir la geometría de la habitación.
 
-##  Modularidad: Clase `Habitacion`
+## Clase `Habitacion`
 Por medio de `Habitacion`, el constructor calcula automáticamente el espaciamiento de la malla y la ubicación de los sensores. Esto evita que estos cálculos deban realizarse de manera externa, favoreciendo una implementación más modular y eficiente.
 
 ---
