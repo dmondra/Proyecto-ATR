@@ -1,6 +1,6 @@
 # Reconstrucción de Escenas mediante Reversión Temporal Acústica (ATR)
 
-**Autores:** Gabriel Briceño, Fiorella Calvo, Rolando Saborío, David Mondragón
+**Autores:** Gabriel Briceño Montero, Fiorella Calvo Salazar, Rolando Saborío Jiménez, David Mondragón Barrantes
 
 ---
 
