@@ -138,9 +138,13 @@ def animar_malla():
         def actualizar(i):
             heatmap.set_array(frames[i])
             max_actual = np.max(np.abs(frames[i]))
-            limite_color = max_actual if max_actual > 0.05 else 0.05
-            heatmap.set_clim(-limite_color, limite_color)
+            min_actual = np.min(frames[i])
+            if (max_actual - min_actual) < 0.05:
+                heatmap.set_clim(-0.05, 0.05)
+            else:
+                heatmap.set_clim(min_actual, max_actual)
             return [heatmap]
+        
         
         print("Creando animación animada...")
     
@@ -185,9 +189,13 @@ def animar_reconstruccion():
         def actualizar(i):
             heatmap.set_array(frames[i])
             max_actual = np.max(np.abs(frames[i]))
-            limite_color = max_actual if max_actual > 0.05 else 0.05
-            heatmap.set_clim(-limite_color, limite_color)
+            min_actual = np.min(frames[i])
+            if (max_actual - min_actual) < 0.05:
+                heatmap.set_clim(-0.05, 0.05)
+            else:
+                heatmap.set_clim(min_actual, max_actual)
             return [heatmap]
+        
         print("Creando animación animada...")
         ani = FuncAnimation(fig, actualizar, frames=len(frames), interval=50)
         nombre_salida = 'inversion_temporal.mp4'
