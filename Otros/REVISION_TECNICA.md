@@ -15,3 +15,20 @@ Para que el script `Proyecto Computacional.py` o el archivo de Jupyter puedan pr
 1. **Modificar el `main` de C++** para que reciba parámetros de malla (`Lx`, `Ly`, `dx`, `dy`) mediante argumentos de línea de comandos (`argc`, `argv`).
 2. **Exportar a archivo plano:** Implementar la librería `<fstream>` en C++ para escribir los valores finales del vector `Malla` en un archivo estructurado como `.csv` o `.txt`.
 3. **Lectura en Python:** Utilizar `numpy.loadtxt()` para importar esos datos directamente al flujo de visualización de gráficos.
+
+## 3. Corrección en el código:
+Nos dimos cuenta que en la línea 111 se tenía: 
+```
+u_presente[sala.get_sensor_idx(s)] = grabacion_paredes[s][n];
+
+```
+Esto al graficar nos daba el t final donde ya estaba todo el sonido en el centro, donde converge.
+Sin embargo al hacer esta corrección:
+
+```
+u_presente[sala.get_sensor_idx(s)] += grabacion_paredes[s][n];
+```
+Nos dimos cuenta que parece tardar más en llegar a el punto anterior lo cual hace mucho sentido.
+
+Lo que sucede con el = al no guardar si no reemplazar, es como tener un coro, donde solo nos interesa ir a escuchar al último que entró cuando nos movemos hacia la salida.
+Lo que hace el += es que tengamos que ir persona por persona hasta llegar a la salida.
