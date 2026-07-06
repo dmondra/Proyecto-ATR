@@ -167,54 +167,39 @@ def animar_reconstruccion():
         Nx = 128  
         Ny = 128  
         inversion_temp = 'inversion_temporal.bin' 
-
         # Leemos el archivo binario completo (float64 equivale a 'double' en C++)
         datos= np.fromfile(inversion_temp, dtype=np.float64)
-
         # Reestructuramos en una matriz 3D: [Número de frames, Filas, Columnas]
         # El -1 le dice a Python que calcule automáticamente cuántos frames se guardaron
         frames = datos.reshape(-1, Nx, Ny)
         print(f"Se cargaron exitosamente {len(frames)} fotogramas.")
         fig, ax = plt.subplots(figsize=(10, 7))
-
         # Usamos la paleta 'seismic' (perfecta para ondas: Azul = Negativo, Blanco = Cero, Rojo = Positivo)
         # 'origin=lower' asegura que la posición (0,0) esté abajo a la izquierda como en un plano cartesiano
         heatmap = ax.imshow(frames[0], cmap='inferno', origin='upper', interpolation='nearest')
         cbar = plt.colorbar(heatmap)
         cbar.set_label('Amplitud de Presión Numérica (u)', fontsize=11, fontweight='bold', labelpad=10)
-        
         ax.set_title("Simulación de la Reconstrucción Espectral por Inversión Temporal")
         ax.set_xlabel("Nodos Eje X (Espacio Discreto)")
         ax.set_ylabel("Nodos Eje Y (Espacio Discreto)")
-
         def actualizar(i):
             heatmap.set_array(frames[i])
-            
             max_actual = np.max(np.abs(frames[i]))
             limite_color = max_actual if max_actual > 0.05 else 0.05
             heatmap.set_clim(-limite_color, limite_color)
             return [heatmap]
-        
         print("Creando animación animada...")
-    
         ani = FuncAnimation(fig, actualizar, frames=len(frames), interval=50)
-
-
         nombre_salida = 'inversion_temporal.mp4'
         print(f"Guardando como {nombre_salida}...")
-
-    
         ani.save('inversion_temporal.mp4', writer='ffmpeg', fps=20)
-
         print("¡Proceso terminado con éxito! Mostrando ventana gráfica...")
         plt.show()
-
     except FileNotFoundError:
         print("\n[ERROR]: No se encontró el archivo 'inversion_temporal.bin'.")
         print("Asegúrate de ejecutar primero el binario de C++ (./atr_solver) en esta misma carpeta.")
     except Exception as e:
         print(f"\n[ERROR INESPERADO]: {e}")
-
 if __name__ == "__main__":
     antes_regresión()
     generar_reconstruccion()
