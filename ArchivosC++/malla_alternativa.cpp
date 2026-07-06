@@ -4,22 +4,19 @@
 #include <fstream>
 #include <omp.h>
 #include <fftw3.h>
-
-// 1. TRANSFORMACIÓN A CLASE (OOP: Encapsulamiento y Abstracción)
+//construcción de la clase
 class Habitacion {
 private:
     // Atributos privados: no se pueden modificar desde fuera de la clase
     double hx;
     double hy;
     std::vector<int> idx_sensores;
-
 public:
     // CONSTRUCTOR: Reemplaza a 'construir_malla_perimetral'
     // Inicializa el objeto y calcula automáticamente la malla perimetral
     Habitacion(int Nx, int Ny, double dx, double dy) {
         hx = dx / double(Nx);
         hy = dy / double(Ny);
-
         // Mapeo de paredes fijas (Norte y Sur)
         for (int j = 0; j < Ny; j++) {
             idx_sensores.push_back(0 * Ny + j);
@@ -31,32 +28,26 @@ public:
             idx_sensores.push_back(i * Ny + (Ny - 1));
         }
     }
-
     // MÉTODOS DE ACCESO (Getters): Permiten leer los datos protegiendo su integridad
     double get_hx() const { return hx; }
     double get_hy() const { return hy; }
     int get_num_sensores() const { return static_cast<int>(idx_sensores.size()); }
     int get_sensor_idx(int s) const { return idx_sensores[s]; }
 };
-
 // Módulo del motor de cálculo por Fourier (Se adapta para recibir el objeto 'Habitacion')
 void ejecutar_solver_atr_optimizado(int Nx, int Ny, int Nt, double dx, double dy, double v, const Habitacion& sala) {
     std::ofstream archivo_binario("viaje_sonido.bin", std::ios::binary);
     const int tamano = Nx * Ny;
-    
     // OOP en uso: Ahora usamos los métodos 'get' para acceder a los datos de la sala
     const double termino_espacial = std::sqrt((1.0 / (sala.get_hx() * sala.get_hx())) + (1.0 / (sala.get_hy() * sala.get_hy())));
     const double dt = (2.0 / (M_PI * v * termino_espacial)) * 0.9; 
-    
     double* u_pasado   = new double[tamano]();
     double* u_presente = new double[tamano]();
     double* u_futuro   = new double[tamano]();
-
     fftw_complex* u_real   = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * tamano);
     fftw_complex* u_hat    = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * tamano);
     fftw_complex* lap_hat  = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * tamano);
     fftw_complex* lap_real = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * tamano);
-
     fftw_plan plan_directo = fftw_plan_dft_2d(Nx, Ny, u_real, u_hat, FFTW_FORWARD, FFTW_MEASURE);
     fftw_plan plan_inverso = fftw_plan_dft_2d(Nx, Ny, lap_hat, lap_real, FFTW_BACKWARD, FFTW_MEASURE);
 
